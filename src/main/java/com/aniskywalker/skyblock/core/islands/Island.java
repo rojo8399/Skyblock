@@ -7,17 +7,14 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.rethinkdb.net.Connection;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.schematic.Schematic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * This object represents an Island stored in the database.
@@ -25,10 +22,6 @@ import java.util.concurrent.ExecutionException;
 public class Island {
 
     private final UUID id;
-    private IslandMetadata metadata = new IslandMetadata();
-    private List<IslandMember> members = new ArrayList<>();
-    private Map<String, ?> settings = new HashMap<>();
-    private Map<String, Map<String, ?>> data = new HashMap<>();
 
     private boolean orphaned = false;
 
@@ -69,18 +62,6 @@ public class Island {
         this.id = id;
     }
 
-    //    /**
-    //     * DO NOT USE THIS METHOD. Instead, fetch an Island from the cache.
-    //     *
-    //     * @param id The UUID of the Island.
-    //     *
-    //     * @return A new builder instance.
-    //     * @see Island#getById(UUID)
-    //     */
-    //    private static IslandBuilder builder(UUID id) {
-    //        return new IslandBuilder(id);
-    //    }
-
     /**
      * Gets whether or not this Island has been orphaned. If this returns true, any method that can throw an
      * {@link OrphanedException} should be expected to do so, and this object should be discarded.
@@ -113,11 +94,9 @@ public class Island {
     public void getMetadata(Callback<IslandMetadata> callback) throws OrphanedException {
     }
 
-    public ImmutableMap<String, ?> getDataForId(String id) {
-        if (data.containsKey(id)) {
-            return ImmutableMap.copyOf(data.get(id));
-        }
-        return ImmutableMap.<String, Object>builder().build();
+
+    public Future<ImmutableMap<String, ?>> getData(String module) {
+        Connection;
     }
 
     public ImmutableList<IslandMember> getMembers() {
@@ -129,16 +108,10 @@ public class Island {
     }
 
     public void destroy() {
-        CompletableFuture<Island> completableFuture = new CompletableFuture<>();
         // Invalidate this Island from the cache.
         cache.invalidate(this.id);
         // Mark this Island as orphaned.
         this.orphaned = true;
-        // Remove all data from this Island (to free up memory in the event there is still a reference to this Island).
-        this.metadata = null;
-        this.members = null;
-        this.settings = null;
-        this.data = null;
     }
 
     //    /**

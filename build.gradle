@@ -23,9 +23,10 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile 'org.spongepowered:spongeapi:5.+'
-    // Just a build tool, chill guys.
+    // Just a way for me to quickly make big objects, chill.
     compile "org.projectlombok:lombok:1.16.10"
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.2'
+    compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.4.2'
+    compile 'org.jdeferred:jdeferred-core:1.2.4'
     compile group: 'com.rethinkdb', name: 'rethinkdb-driver', version: '2.3.3'
 }
 
