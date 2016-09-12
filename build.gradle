@@ -46,3 +46,7 @@ def private String getGitHash() {
     process.waitFor();
     return process.exitValue() ? 'unknown' : process.text.trim();
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
+}
