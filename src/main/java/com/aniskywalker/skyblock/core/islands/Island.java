@@ -8,7 +8,6 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.data.persistence.DataTranslators;
 import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.schematic.Schematic;
 
@@ -59,15 +58,6 @@ public class Island {
     public static Island get(UUID id) throws ExecutionException {
         // Island itself doesn't do anything that could throw an exception...
         return cache.getUnchecked(id);
-    }
-
-    public Schematic getSchematic() {
-//        DataTranslators.CONFIGURATION_NODE.translate(DataTranslators.SCHEMATIC.translate(Schematic
-//                .builder().build())
-//        ).getValue();
-//        Schematic.builder().build();
-        Schematic
-        return null;
     }
 
     /**
